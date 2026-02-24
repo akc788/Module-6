@@ -1,0 +1,33 @@
+class HashItem():
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+    
+    def __repr__(self):
+        return f'{{{self.key}: {self.value}}}'
+
+class HashTable():
+    def __init__(self, size=256):
+        self.size = size
+        self.slots = [None] * size
+        self.used_slots = 0
+    
+    def __repr__(self):
+        text = ''
+        for index, slot in enumerate(self.slots):
+            if slot:
+                text += f', {index}: {slot}'
+        plural = '' if self.used_slots == 1 else 's'
+        return f'<HashTable ({self.used_slots} element{plural}): [{text.lstrip(", ")}]'
+
+    def _hash(self, key):
+        return len(key) % self.size
+
+    def _find_free_slot(self, start):
+        index = start
+        while True:
+            if self.slots[index] is None:
+                return index
+            index = (index + 1) % self.size
+            if index == start:
+                return None
