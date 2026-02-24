@@ -1,0 +1,51 @@
+
+grades = {
+    "Anna": 5,
+    "Mikko": 4,
+    "Sara": 3
+}
+
+def print_menu():
+    print("\n--- Student Grade Lookup ---")
+    print("1: Add/Update a grade")
+    print("2: Search a student’s grade")
+    print("3: Print all students and grades")
+    print("0: Exit")
+
+while True:
+    print_menu()
+    choice = input("Choose an option: ")
+
+    if choice == "1":
+        name = input("Enter student name: ")
+        try:
+            grade = int(input("Enter grade (0-5): "))
+            if grade < 0 or grade > 5:
+                print("Grade must be between 0 and 5.")
+                continue
+            grades[name] = grade
+            print(f"Grade for {name} set to {grade}.")
+        except ValueError:
+            print("Please enter a valid number for the grade.")
+
+    elif choice == "2":
+        name = input("Enter student name to search: ")
+        if name in grades:
+            print(f"{name}'s grade is {grades[name]}.")
+        else:
+            print(f"Student '{name}' not found.")
+
+    elif choice == "3":
+        if grades:
+            print("\nAll students and grades:")
+            for student, grade in grades.items():
+                print(f"{student}: {grade}")
+        else:
+            print("No student data available.")
+
+    elif choice == "0":
+        print("Exiting program. Goodbye!")
+        break
+
+    else:
+        print("Invalid option. Please choose 0, 1, 2, or 3.")
